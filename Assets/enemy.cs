@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 2f;
+    public int speed = 40;
     public float health = 10f;
-    public float detectionRange = 5000f;
+    public int detectionRange = 50;
 
     private Transform player;
     private Rigidbody2D rb;
@@ -20,30 +20,27 @@ public class Enemy : MonoBehaviour
     {
         if (player == null) return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        ChasePlayer();
+        float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)player.position);
         // Chase player if in range
+            Debug.Log($"Distance: {distanceToPlayer} | In range: {distanceToPlayer < detectionRange}");
+            Debug.Log($"Detection range: {detectionRange}");
+
         if (distanceToPlayer < detectionRange)
         {
+            ChasePlayer();
             
-        }
-        else
-        {
-            // Patrol
-            //rb.linearVelocity = new Vector2(speed * (facingRight ? 1 : -1), rb.linearVelocity.y);
         }
     }
 
-    void ChasePlayer()
+        void ChasePlayer()
     {
-        float direction = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(speed * direction, rb.linearVelocity.y);
+        Vector2 targetPosition = Vector2.MoveTowards(
+            rb.position,
+            player.position,
+            speed * Time.fixedDeltaTime
+        );
 
-        // Flip sprite if needed
-        if ((direction > 0 && !facingRight) || (direction < 0 && facingRight))
-        {
-            Flip();
-        }
+        rb.MovePosition(targetPosition);
     }
 
     void Flip()
