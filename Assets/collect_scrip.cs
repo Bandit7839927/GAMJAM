@@ -1,18 +1,19 @@
 using UnityEngine;
 
-public class collect_scrip : MonoBehaviour{
 
-    public string objid;
+public abstract class Collectible : MonoBehaviour
+{
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
         
+        if (other.CompareTag("Player"))
+        {
+            ApplyEffect(other.gameObject); 
+            Destroy(gameObject);          
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    protected abstract void ApplyEffect(GameObject player);
 }

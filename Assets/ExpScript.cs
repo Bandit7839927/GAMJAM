@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class ExpScript : MonoBehaviour
+public class ExpScript : Collectible
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int value = 1; 
 
-    // Update is called once per frame
-    void Update()
+    protected override void ApplyEffect(GameObject player)
     {
+        PlayerControl playerControl = player.GetComponent<PlayerControl>();
         
+        if (playerControl != null){
+            playerControl.exp += value;
+            Debug.Log("¡EXP añadida! Total en el jugador: " + playerControl.exp);
+        }
     }
 }
