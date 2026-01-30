@@ -18,6 +18,19 @@ public class PlayerControl : MonoBehaviour
 
     void Start(){
         lookingLeft = false;
+
+        // Buscamos el objeto hijo que se llama "ObjCollider"
+        Transform hijoColisionador = transform.Find("ObjCollider");
+        
+        if (hijoColisionador != null)
+        {
+            // Obtenemos su Collider y forzamos el IsTrigger
+            Collider2D col = hijoColisionador.GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.isTrigger = true;
+            }
+        }
     }
 
     void movementhandler(){
