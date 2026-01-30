@@ -21,9 +21,7 @@ public class Enemy : MonoBehaviour
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)player.position);
-        // Chase player if in range
-            Debug.Log($"Distance: {distanceToPlayer} | In range: {distanceToPlayer < detectionRange}");
-            Debug.Log($"Detection range: {detectionRange}");
+       
 
         if (distanceToPlayer < detectionRange)
         {
