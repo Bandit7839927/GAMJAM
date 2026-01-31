@@ -9,11 +9,11 @@ public class PlayerControl : MonoBehaviour
     public float speed = 5f;
     public float health = 100f;
     public float shield = 50f;
-    public float PlayerDamage = 10f;
+    public float playerDamage = 10f;
 
     [Header("Atac")]
     public GameObject punt_atac;
-    public float attackCooldown = 1f;
+    public float attackCooldown = 0.2f;
     public float attackDuration = 0.2f;
 
     private float currentAttackTimer;
@@ -42,7 +42,6 @@ public class PlayerControl : MonoBehaviour
             if (col != null)
             {
                 col.isTrigger = true;
-                Debug.Log("Hitbox de recolección configurada como Trigger automáticamente.");
             }
         }
     }
@@ -109,6 +108,7 @@ public class PlayerControl : MonoBehaviour
         currentAttackTimer = attackDuration;
         if (punt_atac != null) punt_atac.SetActive(true);
     }
+    
     public void Exp_Gained(){
         while(exp >= xp_lvl[level]){   //Si tenim mes
             level++;

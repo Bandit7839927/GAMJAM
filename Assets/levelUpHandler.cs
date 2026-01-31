@@ -62,7 +62,7 @@ public class levelUpHandler : MonoBehaviour
             case StatType.AttackDamage:
                 // Assegura't de tenir aquesta variable al PlayerControl
                 // player.attackDamage += upgrade.amount;
-                Debug.Log("Dany pujat!");
+                player.playerDamage += upgrade.amount;
                 break;
         }
 

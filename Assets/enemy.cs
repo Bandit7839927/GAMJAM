@@ -67,13 +67,14 @@ public class Enemy : MonoBehaviour
         }
         if (collision.CompareTag("Player_attack"))
         {
+            Debug.Log("Player hit enemy!");
             // Get the PlayerControl from the attack collider or its parent and use its damage value
             PlayerControl pc = collision.GetComponentInParent<PlayerControl>();
             if (pc == null)
                 pc = FindObjectOfType<PlayerControl>();
 
             if (pc != null)
-                TakeDamage(pc.PlayerDamage);
+                TakeDamage(pc.playerDamage);
             else
                 TakeDamage(10f); // fallback
         }
