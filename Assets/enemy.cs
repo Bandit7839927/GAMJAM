@@ -2,81 +2,89 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int speed = 40;
+    [Header("Stats")]
+    public int speed = 3;
     public float health = 20f;
-    public int detectionRange = 50;
     public int damage = 10;
+    public float detectionRange = 15f;
 
+    [Header("Attack Settings")]
+    public float damageInterval = 1.0f; 
+    private float nextDamageTimeToPlayer = 0f; // Track when the player can be hit again
 
     private Transform player;
     private Rigidbody2D rb;
-    private bool facingRight = true;
+    private float nextTimeEnemyCanBeHit = 0f;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null) player = p.transform;
+        
+        if (rb != null) rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
     }
 
     void FixedUpdate()
     {
         if (player == null) return;
 
-        float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)player.position);
-       
-        if (distanceToPlayer < detectionRange && distanceToPlayer > 13.5)
+        float dist = Vector2.Distance(transform.position, player.position);
+        if (dist < detectionRange && dist > 0.5f)
         {
-            ChasePlayer();
+            Vector2 target = Vector2.MoveTowards(rb.position, player.position, speed * Time.fixedDeltaTime);
+            rb.MovePosition(target);
         }
     }
 
-    void ChasePlayer()
+    public void TakeDamage(float amount)
     {
-        Vector2 targetPosition = Vector2.MoveTowards(
-            rb.position,
-            player.position,
-            speed * Time.fixedDeltaTime
-        );
-
-        rb.MovePosition(targetPosition);
+        if (Time.time < nextTimeEnemyCanBeHit) return; 
+        
+        health -= amount;
+        nextTimeEnemyCanBeHit = Time.time + 0.2f; 
+        
+        if (health <= 0) Destroy(gameObject);
     }
 
-    void Flip()
+    // This handles both the first hit AND the repeat hits reliably
+    void HandlePlayerDamage(GameObject obj)
     {
-        facingRight = !facingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
+        // Check if enough time has passed since the LAST hit
+        if (Time.time >= nextDamageTimeToPlayer)
         {
-            Destroy(gameObject);
+            PlayerControl pc = obj.GetComponent<PlayerControl>();
+            if (pc == null) pc = obj.GetComponentInParent<PlayerControl>();
+
+            if (pc != null)
+            {
+                pc.TakeDamage(damage);
+                // Set the next allowed hit time to (Now + Interval)
+                nextDamageTimeToPlayer = Time.time + damageInterval;
+                Debug.Log("Hit registered at: " + Time.time);
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.CompareTag("PlayerHitbox"))
         {
-            // Handle collision with player (damage, etc.)
-            Debug.Log("Enemy hit player!");
+            HandlePlayerDamage(collision.gameObject);
         }
+
         if (collision.CompareTag("Player_attack"))
         {
-            Debug.Log("Player hit enemy!");
-            // Get the PlayerControl from the attack collider or its parent and use its damage value
             PlayerControl pc = collision.GetComponentInParent<PlayerControl>();
-            if (pc == null)
-                pc = FindFirstObjectByType<PlayerControl>();
+            if (pc != null) TakeDamage(pc.playerDamage);
+        }
+    }
 
-            if (pc != null)
-                TakeDamage(pc.playerDamage);
-            else
-                TakeDamage(10f); // fallback
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") || collision.CompareTag("PlayerHitbox"))
+        {
+            HandlePlayerDamage(collision.gameObject);
         }
     }
 }
