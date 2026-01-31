@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private float nextTimeEnemyCanBeHit = 0f;
 
+    public GameObject efectoParticulas;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,7 +46,10 @@ public class Enemy : MonoBehaviour
         health -= amount;
         nextTimeEnemyCanBeHit = Time.time + 0.2f; 
         
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0) {
+            Destroy(gameObject);
+            Explotar();
+        }
     }
 
     // This handles both the first hit AND the repeat hits reliably
@@ -86,5 +91,21 @@ public class Enemy : MonoBehaviour
         {
             HandlePlayerDamage(collision.gameObject);
         }
+    }
+
+    void Explotar()
+    {
+        if (efectoParticulas != null)
+        {
+            GameObject particulas = Instantiate(efectoParticulas, transform.position, Quaternion.identity);
+            ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
+            
+            if (ps != null)
+            {
+                ps.Clear(); // Borra cualquier rastro de simulaciones viejas
+                ps.Play();  // Inicia la explosión desde el segundo 0
+            }
+        }
+        Destroy(gameObject);
     }
 }
