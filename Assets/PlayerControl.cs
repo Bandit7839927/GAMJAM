@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 5f;
     public float health = 100f;
     public float shield = 50f;
+    public float PlayerDamage = 10f;
 
     [Header("Atac")]
     public GameObject punt_atac;
@@ -22,9 +23,11 @@ public class PlayerControl : MonoBehaviour
 
     enum playerstate { idle, running, dead, attacking, parrying }
     playerstate currentstate = playerstate.idle;
+    private Rigidbody2D rb;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         if (punt_atac != null) punt_atac.SetActive(false);
         Transform hijoColisionador = transform.Find("ObjCollider");
     
@@ -83,8 +86,8 @@ public class PlayerControl : MonoBehaviour
         if (moveX < 0 && !lookingLeft) Flip();
         else if (moveX > 0 && lookingLeft) Flip();
 
-        Vector3 movement = new Vector3(moveX, moveY, 0).normalized * speed * Time.deltaTime;
-        transform.Translate(movement);
+        Vector2 movement = new Vector2(moveX, moveY).normalized * speed;
+        rb.linearVelocity = movement;
     }
 
     void Flip()

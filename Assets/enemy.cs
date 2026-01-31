@@ -3,8 +3,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int speed = 40;
-    public float health = 10f;
+    public float health = 20f;
     public int detectionRange = 50;
+    public int damage = 10;
+
 
     private Transform player;
     private Rigidbody2D rb;
@@ -22,15 +24,13 @@ public class Enemy : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)player.position);
        
-
-        if (distanceToPlayer < detectionRange)
+        if (distanceToPlayer < detectionRange && distanceToPlayer > 13.5)
         {
             ChasePlayer();
-            
         }
     }
 
-        void ChasePlayer()
+    void ChasePlayer()
     {
         Vector2 targetPosition = Vector2.MoveTowards(
             rb.position,
@@ -54,13 +54,8 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            Die();
+            Destroy(gameObject);
         }
-    }
-
-    void Die()
-    {
-        Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -69,6 +64,18 @@ public class Enemy : MonoBehaviour
         {
             // Handle collision with player (damage, etc.)
             Debug.Log("Enemy hit player!");
+        }
+        if (collision.CompareTag("Player_attack"))
+        {
+            // Get the PlayerControl from the attack collider or its parent and use its damage value
+            PlayerControl pc = collision.GetComponentInParent<PlayerControl>();
+            if (pc == null)
+                pc = FindObjectOfType<PlayerControl>();
+
+            if (pc != null)
+                TakeDamage(pc.PlayerDamage);
+            else
+                TakeDamage(10f); // fallback
         }
     }
 }
