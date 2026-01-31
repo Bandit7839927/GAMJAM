@@ -51,10 +51,6 @@ public class PlayerControl : MonoBehaviour
 
         Vector3 movement = new Vector3(moveX, moveY, 0).normalized * speed * Time.deltaTime;
         transform.Translate(movement);
-
-        // Actualitzem estat visual si ens movem
-        if (movement.magnitude > 0) currentstate = playerstate.running;
-        else currentstate = playerstate.idle;
     }
 
     void Flip() 
@@ -93,6 +89,22 @@ public class PlayerControl : MonoBehaviour
 
         // --- PART 3: MOVIMENT (Només si no ataquem) ---
         movementhandler(keyboard);
+
+        // --- PART 4: ESTAT VISUAL ---
+        if (currentstate != playerstate.attacking)
+        {
+            if (Keyboard.current.aKey.isPressed ||
+                Keyboard.current.dKey.isPressed ||
+                Keyboard.current.wKey.isPressed ||
+                Keyboard.current.sKey.isPressed)
+            {
+                currentstate = playerstate.running;
+            }
+            else
+            {
+                currentstate = playerstate.idle;
+            }
+        }
     }
 
     void StartAttack()
