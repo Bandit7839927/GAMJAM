@@ -1,83 +1,106 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
+    [Header("Stats")]
     public int level = 1;
     public int exp = 0;
     public float speed = 5f;
     public float health = 100f;
     public float shield = 50f;
-    public float attackcooldown = 1f;
-    public float attackdamage = 10f;
 
-    public bool lookingLeft;
+    [Header("Atac")]
+    public GameObject punt_atac;
+    public float attackCooldown = 1f;
+    public float attackDuration = 0.2f;
 
-    enum playerstate { idle, running, dead, attacking, parrying}
-    playerstate currentstate = playerstate.idle;    
+    private float currentAttackTimer;
+    private bool able_to_attack = true;
+    private bool lookingLeft = false;
 
-    void Start(){
-        lookingLeft = false;
+    enum playerstate { idle, running, dead, attacking, parrying }
+    playerstate currentstate = playerstate.idle;
 
-        // Buscamos el objeto hijo que se llama "ObjCollider"
-        Transform hijoColisionador = transform.Find("ObjCollider");
-        
-        if (hijoColisionador != null)
-        {
-            // Obtenemos su Collider y forzamos el IsTrigger
-            Collider2D col = hijoColisionador.GetComponent<Collider2D>();
-            if (col != null)
-            {
-                col.isTrigger = true;
-            }
-        }
+    void Start()
+    {
+        if (punt_atac != null) punt_atac.SetActive(false);
     }
 
-    void movementhandler(){
+    void Update()
+    {
         var keyboard = Keyboard.current;
-        if (keyboard == null) return; // Seguridad por si no hay teclado conectado
+        if (keyboard == null) return;
 
-        float moveX = 0f;
-        if (keyboard.aKey.isPressed) moveX = -1f;
-        if (keyboard.dKey.isPressed) moveX = 1f;
-
-        float moveY = 0f;
-        if (keyboard.wKey.isPressed) moveY = 1f;
-        if (keyboard.sKey.isPressed) moveY = -1f;
-
-        // --- LÓGICA DE FLIP ---
-        if (moveX < 0 && !lookingLeft) {
-            Flip();
-        }
-        else if (moveX > 0 && lookingLeft) {
-            Flip();
+        if (currentstate == playerstate.attacking)
+        {
+            currentAttackTimer -= Time.deltaTime;
+            if (currentAttackTimer <= 0)
+                EndAttack();
+            return;
         }
 
-        // Movimiento (Nota: En Beat 'em up usamos Z para profundidad, pero si prefieres Y está bien)
+        if (keyboard.mKey.wasPressedThisFrame && able_to_attack)
+        {
+            StartAttack();
+            return;
+        }
+
+        HandleMovement();
+
+        if (Keyboard.current.aKey.isPressed ||
+            Keyboard.current.dKey.isPressed ||
+            Keyboard.current.wKey.isPressed ||
+            Keyboard.current.sKey.isPressed)
+            currentstate = playerstate.running;
+        else
+            currentstate = playerstate.idle;
+    }
+
+    void HandleMovement()
+    {
+        var keyboard = Keyboard.current;
+
+        float moveX = (keyboard.aKey.isPressed ? -1 : 0) +
+                      (keyboard.dKey.isPressed ? 1 : 0);
+
+        float moveY = (keyboard.sKey.isPressed ? -1 : 0) +
+                      (keyboard.wKey.isPressed ? 1 : 0);
+
+        if (moveX < 0 && !lookingLeft) Flip();
+        else if (moveX > 0 && lookingLeft) Flip();
+
         Vector3 movement = new Vector3(moveX, moveY, 0).normalized * speed * Time.deltaTime;
         transform.Translate(movement);
     }
-    void AddExp(int amount) {
-        exp += amount;
-        if(exp >= level * 10){
-            ++level;
-            exp = 0;
-            health = 100f; 
-            Debug.Log("¡Nivel aumentado! Nuevo nivel: " + level);
-        }
-        
-    }
-    void Flip() {
+
+    void Flip()
+    {
         lookingLeft = !lookingLeft;
-        
-        // Multiplicamos la escala X por -1 para girar el sprite y todos sus hijos
-        Vector3 currentScale = transform.localScale;
-        currentScale.x *= -1;
-        transform.localScale = currentScale;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
-    void Update() {
-        // El input de teclado es mejor procesarlo en Update para que no se pierdan pulsaciones
-        movementhandler();
+    void StartAttack()
+    {
+        currentstate = playerstate.attacking;
+        able_to_attack = false;
+        currentAttackTimer = attackDuration;
+        if (punt_atac != null) punt_atac.SetActive(true);
+    }
+
+    void EndAttack()
+    {
+        currentstate = playerstate.idle;
+        if (punt_atac != null) punt_atac.SetActive(false);
+        CancelInvoke(nameof(ResetCooldown));
+        Invoke(nameof(ResetCooldown), attackCooldown);
+    }
+
+    void ResetCooldown()
+    {
+        able_to_attack = true;
     }
 }
