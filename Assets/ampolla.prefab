@@ -240,8 +240,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1733995990857809588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672e632284173e04396f9e35e803cb2a, type: 3}
+  m_Script: {fileID: 11500000, guid: d2105ad2556f6dc4a99a81c375b40793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  prefabDeLobjecte: {fileID: 0}
+  prefabDeLobjecte: {fileID: 7746115031859929134, guid: cd8b15895f979654cbfc4a070bdd787a, type: 3}
   iconaVisual: {fileID: 961577697834119989}
