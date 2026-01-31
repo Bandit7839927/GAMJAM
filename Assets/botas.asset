@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: botas
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: botas
-  description: Augmenten la velocitat en 5
+  description: Augmenten la velocitat en 20
   icon: {fileID: 21300000, guid: 91b456fd1685dd7428f86a1f15777102, type: 3}
+  backgroundColor: {r: 1, g: 0, b: 0, a: 1}
   statToBuff: 1
   amount: 20
   isPermanent: 0

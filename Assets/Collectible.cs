@@ -1,19 +1,16 @@
 using UnityEngine;
 
-
 public abstract class Collectible : MonoBehaviour
 {
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        
-        if (other.CompareTag("PlayerHitbox"))
+        // Detectem si és el jugador o la seva hitbox
+        if (other.CompareTag("Player") || other.CompareTag("PlayerHitbox"))
         {
-            ApplyEffect(other.gameObject); 
-            Destroy(gameObject);          
+            ApplyEffect(other.gameObject);
+            // HEM ESBORRAT EL DESTROY D'AQUÍ!
         }
     }
 
-    
     protected abstract void ApplyEffect(GameObject player);
 }

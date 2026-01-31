@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5057178d13c55384eb2c8d7c1cea1615
+guid: c542b20e5cd7ccd4caffd5eaa63b5b24
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8452692026047360621
-    second: TacoSign_0
+      213: 9088891756107694168
+    second: maskman_3-1.png_6_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TacoSign_0
+      name: maskman_3-1.png_6_0
       rect:
         serializedVersion: 2
-        x: 95
-        y: 0
-        width: 802
-        height: 929
+        x: 0
+        y: 124
+        width: 256
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3919ba7f26102ba80800000000000000
-      internalID: -8452692026047360621
+      spriteID: 85086cca5ea322e70800000000000000
+      internalID: 9088891756107694168
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TacoSign_0: -8452692026047360621
+      maskman_3-1.png_6_0: 9088891756107694168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

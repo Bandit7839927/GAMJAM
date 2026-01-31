@@ -8,7 +8,7 @@ public class Boss : MonoBehaviour
     public int damage = 10;
     public float detectionRange = 50f;
     public float attackRange = 15f; // Rango para dejar de caminar y golpear
-
+    public int xp_drop = 5;
     [Header("Attack Settings")]
     public float damageInterval = 1.0f; 
     public float punchDuration = 0.3f;
@@ -95,7 +95,11 @@ public class Boss : MonoBehaviour
         if (Time.time < nextTimeEnemyCanBeHit) return; 
         health -= amount;
         nextTimeEnemyCanBeHit = Time.time + 0.1f; 
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0){
+            player.GetComponent<PlayerControl>().exp += xp_drop; // Dona experiència al jugador
+            player.GetComponent<PlayerControl>().Exp_Gained();
+            Destroy(gameObject);
+        }
     }
 
     void HandlePlayerDamage(GameObject obj)

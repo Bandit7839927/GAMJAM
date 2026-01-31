@@ -9,6 +9,7 @@ public class UpgradeData : ScriptableObject
     [TextArea] 
     public string description;      // Descripció (ex: "Et cura 20 punts")
     public Sprite icon;             // Imatge de la carta
+    public Color backgroundColor; // Color de fons de la carta
 
     [Header("Efectes")]
     public StatType statToBuff;     // Quina estadística millora?

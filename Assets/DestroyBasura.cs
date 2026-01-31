@@ -5,9 +5,9 @@ public class DestroyBasura : MonoBehaviour
     // Aquí arrastraremos nuestro Prefab de partículas desde el Inspector
     public GameObject efectoParticulas;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player_attack"))
         {
             Explotar();
         }

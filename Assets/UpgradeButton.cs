@@ -9,6 +9,7 @@ public class UpgradeButton : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
     public Image iconImage;
+    public Image buttonBackground;
     // Variables internes per saber què fa aquest botó concret
     private UpgradeData myUpgrade;
     private levelUpHandler manager;
@@ -23,6 +24,7 @@ public class UpgradeButton : MonoBehaviour
         if(titleText != null) titleText.text = data.upgradeName;
         if(descText != null) descText.text = data.description;
         if(iconImage != null && data.icon != null) iconImage.sprite = data.icon;
+        if(buttonBackground != null && data.backgroundColor != null) buttonBackground.color = data.backgroundColor;
     }
 
     // Aquesta funció l'has de connectar al "On Click()" del botó a Unity

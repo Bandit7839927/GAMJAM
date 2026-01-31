@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float health = 20f;
     public int damage = 10;
     public float detectionRange = 50f;
+    public int xp_drop = 1;
     public float attackRange = 15f; // Rango para dejar de caminar y golpear
 
     [Header("Attack Settings")]
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     private float nextAttackAllowedTime = 0f;
     private float nextDamageTimeToPlayer = 0f; 
     private float punchEndTime = 0f; // Momento en que debe terminar la animación
+
+    public GameObject efectoParticulas;
 
     private Transform player;
     private Rigidbody2D rb;
@@ -99,7 +102,12 @@ public class Enemy : MonoBehaviour
         if (Time.time < nextTimeEnemyCanBeHit) return; 
         health -= amount;
         nextTimeEnemyCanBeHit = Time.time + 0.1f; 
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0){
+            player.GetComponent<PlayerControl>().exp += xp_drop; // Dona experiència al jugador
+            player.GetComponent<PlayerControl>().Exp_Gained();
+            Destroy(gameObject);
+            Explotar();
+        }
     }
 
     void HandlePlayerDamage(GameObject obj)
@@ -161,4 +169,21 @@ public class Enemy : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
+
+    void Explotar()
+{
+    if (efectoParticulas != null)
+    {
+        GameObject particulas = Instantiate(efectoParticulas, transform.position, Quaternion.identity);
+        ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
+        
+        if (ps != null)
+        {
+            ps.Clear(); // Borra cualquier rastro de simulaciones viejas
+            ps.Play();  // Inicia la explosión desde el segundo 0
+        }
+    }
+    Destroy(gameObject);
+}
+
 }
