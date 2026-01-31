@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 239e103bf0ce045489f091fa9f2cc70e
+guid: ee6ce60ce88c7ad4dabf9f6b04daea79
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2289058232797270630
-    second: pixil-frame-0_15_0
+      213: -2042692558971317097
+    second: paszebra_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixil-frame-0_15_0
+      name: paszebra_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 62
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6629014b55e54cf10800000000000000
-      internalID: 2289058232797270630
+      spriteID: 7945e25b0f5e6a3e0800000000000000
+      internalID: -2042692558971317097
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pixil-frame-0_15_0: 2289058232797270630
+      paszebra_0: -2042692558971317097
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
