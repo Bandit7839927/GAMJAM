@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -20,6 +22,11 @@ public class PlayerControl : MonoBehaviour
     private bool able_to_attack = true;
     private bool lookingLeft = false;
 
+    public GameObject itemInventari;
+    public UnityEngine.UI.Image slotInventoriUI;
+
+    public ObjecteRecollible objecteAprop;
+
     enum playerstate { idle, running, dead, attacking, parrying }
     private Animator anim;
 
@@ -29,7 +36,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Nivells")]
     public int level = 0;
     public int exp = 0;
-    public int[] xp_lvl = { 5, 10, 20, 30, 40 };
+    public int[] xp_lvl = { 3, 10, 20, 30, 40 };
     public levelUpHandler levelManager;
     
     private Rigidbody2D rb;
@@ -60,14 +67,129 @@ public class PlayerControl : MonoBehaviour
             if (col != null) col.isTrigger = true;
             hijoColisionador.gameObject.tag = "PlayerHitbox";
         }
+
+        if (levelManager == null)
+        {
+            levelManager = FindObjectOfType<levelUpHandler>();
+        }
     }
 
+    
+    private void RecollirItem()
+   {
+       // 1. Hi ha algun objecte als nostres peus?
+       if (objecteAprop != null)
+       {
+           // 2. Tenim l'inventari buit?
+           if (itemInventari == null)
+           {
+               // A. Guardem el prefab
+               itemInventari = objecteAprop.prefabDeLobjecte;
+
+               Debug.Log("RECOLLIT! Ara tens a la butxaca: " + itemInventari.name);
+
+               // --- CORRECCIÓ: AFEGEIX AQUESTA LÍNIA ---
+               ActualitzarUI(); 
+               // ----------------------------------------
+
+               // B. Destruïm l'objecte del terra
+               Destroy(objecteAprop.gameObject);
+
+               // C. Netegem la referència
+               objecteAprop = null;
+           }
+           else
+           {
+               Debug.Log("INVENTARI PLEN! Ja portes alguna cosa.");
+           }
+       }
+       else
+       {
+           Debug.Log("No hi ha res per recollir aquí.");
+       }
+   }
+    
+    void ActualitzarUI()
+    {
+        // CAS 1: Tenim un objecte a la butxaca?
+        if (itemInventari != null && slotInventoriUI != null)
+        {
+            // Busquem les dades o el sprite
+            DadesProjectil dades = itemInventari.GetComponent<DadesProjectil>();
+
+            if (dades != null)
+                slotInventoriUI.sprite = dades.iconaUI;
+            else
+            {
+                SpriteRenderer renderer = itemInventari.GetComponent<SpriteRenderer>();
+                if (renderer != null) slotInventoriUI.sprite = renderer.sprite;
+            }
+
+            // Encenem la imatge
+            slotInventoriUI.gameObject.SetActive(true);
+            slotInventoriUI.preserveAspect = true;
+        }
+        // CAS 2: No tenim res (hem llançat l'objecte)
+        else if (slotInventoriUI != null)
+        {
+            // Apaguem la imatge
+            slotInventoriUI.gameObject.SetActive(false);
+        }
+    }
+
+    void LlançarItem()
+    {
+        // 1. Seguretat: Si no tens res, no facis res
+        if (itemInventari == null) return;
+
+        // 2. Calculem la posició de sortida (una mica davant del jugador per no xocar)
+        // Si mirem a l'esquerra (-1) o dreta (+1)
+        float direccioX = lookingLeft ? -1f : 1f;
+        Vector3 puntSortida = transform.position + new Vector3(direccioX * 1.5f, 0, 0); // 1.5 metres davant
+
+        // 3. GENEREM L'OBJECTE (Instantiate)
+        GameObject projectil = Instantiate(itemInventari, puntSortida, Quaternion.identity);
+
+        // 4. LI DONEM VELOCITAT
+        Rigidbody2D rbProjectil = projectil.GetComponent<Rigidbody2D>();
+        
+        // Busquem si té configurada una velocitat especial a la fitxa
+        DadesProjectil dades = itemInventari.GetComponent<DadesProjectil>();
+        float força = (dades != null) ? dades.velocitatLlançament : 10f; // 10 per defecte
+
+        if (rbProjectil != null)
+        {
+            // Unity 6 fa servir linearVelocity. Si fas servir versió vella, canvia-ho per .velocity
+            rbProjectil.linearVelocity = new Vector2(direccioX * força, 0);
+        }
+
+        Debug.Log("Llançat: " + itemInventari.name);
+
+        // 5. BUIDEM L'INVENTARI
+        itemInventari = null;
+        ActualitzarUI(); // Això apagarà la icona de la pantalla
+    }
+    
     void Update()
     {
         if (currentstate == playerstate.dead) return;
 
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
+
+        if (keyboard.nKey.wasPressedThisFrame)
+        {
+            // Prioritat: Si tenim una arma, la llancem primer
+            if (itemInventari != null)
+            {
+                LlançarItem();
+            }
+            // Si tenim les mans buides, intentem recollir del terra
+            else 
+            {
+                RecollirItem();
+            }
+        }
 
         if (currentstate == playerstate.attacking)
         {
@@ -181,7 +303,11 @@ public class PlayerControl : MonoBehaviour
         while (exp >= xp_lvl[level])
         {
             level++;
-            if (levelManager != null) levelManager.show_update();
+            
+            if (levelManager != null){
+                Debug.Log("Level Up! Nuevo nivel: " + level);
+                levelManager.show_update();
+            } 
             if (level >= xp_lvl.Length) break;
         }
     }
