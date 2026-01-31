@@ -489,9 +489,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 207105359}
-  - component: {fileID: 207105358}
-  - component: {fileID: 207105357}
+  - component: {fileID: 146731000}
+  - component: {fileID: 146730999}
+  - component: {fileID: 146730998}
+  - component: {fileID: 146731001}
+  - component: {fileID: 146731002}
   m_Layer: 0
   m_Name: Mur
   m_TagString: Untagged
@@ -617,8 +619,130 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &210054248
-PrefabInstance:
+--- !u!114 &146731001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146730997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebf2c2567db3d24e9e20bff5745f511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyBasura
+  efectoParticulas: {fileID: 1895161617460635828, guid: 176576eb5e346174fb2a6041781dbb02, type: 3}
+--- !u!50 &146731002
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146730997}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!1 &175712004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175712005}
+  - component: {fileID: 175712008}
+  - component: {fileID: 175712007}
+  - component: {fileID: 175712006}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &175712005
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175712004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2058532722}
+  m_Father: {fileID: 1065912975}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 245, y: -48}
+  m_SizeDelta: {x: 342.22, y: 72.9446}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &175712006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175712004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbe9c66778efc2428cbd3e7638179ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BarraVida
+  BarraDeVida: {fileID: 2058532723}
+--- !u!114 &175712007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175712004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -6832078442279881449, guid: d10ceb135e6c01841ad20f5e53f9d311, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &175712008
+CanvasRenderer:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
@@ -922,6 +1046,10 @@ PrefabInstance:
       propertyPath: detectionRange
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 6216376757858194748, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
+      propertyPath: efectoParticulas
+      value: 
+      objectReference: {fileID: 8562981474452954081, guid: ae5d190d7f64e1c4391a9779fc53bc28, type: 3}
     - target: {fileID: 6877235206142616103, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1933,7 +2061,7 @@ GameObject:
   - component: {fileID: 565138791}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Player_attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1947,7 +2075,7 @@ Transform:
   m_GameObject: {fileID: 565138789}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.032615, y: 0.131833, z: -2}
+  m_LocalPosition: {x: 0.032615, y: 0.131833, z: 0}
   m_LocalScale: {x: 0.27434573, y: 0.06946827, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2374,6 +2502,7 @@ GameObject:
   - component: {fileID: 774227904}
   - component: {fileID: 774227903}
   - component: {fileID: 774227906}
+  - component: {fileID: 774227907}
   m_Layer: 0
   m_Name: Barril
   m_TagString: Untagged
@@ -2528,6 +2657,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &774227907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774227902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebf2c2567db3d24e9e20bff5745f511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyBasura
+  efectoParticulas: {fileID: 1895161617460635828, guid: 176576eb5e346174fb2a6041781dbb02, type: 3}
 --- !u!1 &774808153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3214,7 +3356,7 @@ MonoBehaviour:
   MaxHealth: 100
   shield: 50
   playerDamage: 10
-  punt_atac: {fileID: 0}
+  punt_atac: {fileID: 565138789}
   attackCooldown: 0.1
   attackDuration: 0.2
   itemInventari: {fileID: 0}
@@ -3337,6 +3479,10 @@ PrefabInstance:
       propertyPath: punchDuration
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 6216376757858194748, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
+      propertyPath: efectoParticulas
+      value: 
+      objectReference: {fileID: 8562981474452954081, guid: ae5d190d7f64e1c4391a9779fc53bc28, type: 3}
     - target: {fileID: 6877235206142616103, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -5951,6 +6097,10 @@ PrefabInstance:
       propertyPath: punchDuration
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 6216376757858194748, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
+      propertyPath: efectoParticulas
+      value: 
+      objectReference: {fileID: 8562981474452954081, guid: ae5d190d7f64e1c4391a9779fc53bc28, type: 3}
     - target: {fileID: 8572392749565517451, guid: dbaee5c2e39964a4099e128f93fc5812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 187.4
