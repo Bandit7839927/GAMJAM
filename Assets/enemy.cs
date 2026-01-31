@@ -128,6 +128,22 @@ public class Enemy : MonoBehaviour
             PlayerControl pc = collision.GetComponentInParent<PlayerControl>();
             if (pc != null) TakeDamage(pc.playerDamage);
         }
+
+        if (collision.CompareTag("Projectil")) // Assegura't que l'ampolla tingui aquest Tag
+        {
+            // Busquem les dades del projectil per saber quant mal fa
+            DadesProjectil dades = collision.GetComponent<DadesProjectil>();
+            
+            if (dades != null)
+            {
+                TakeDamage(dades.damage); // Apliquem el dany definit a l'objecte
+                Debug.Log("Enemic colpejat per projectil! Mal rebut: " + dades.damage);
+                
+                // Opcional: Destruir el projectil en col·lidir amb l'enemic
+                Destroy(collision.gameObject); 
+            }
+        }
+
     }
 
     void OnTriggerStay2D(Collider2D collision)
