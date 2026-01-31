@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     private bool lookingLeft = true;
 
+    public GameObject efectoParticulas;
+
 
     void Start()
     {
@@ -99,7 +101,10 @@ public class Enemy : MonoBehaviour
         if (Time.time < nextTimeEnemyCanBeHit) return; 
         health -= amount;
         nextTimeEnemyCanBeHit = Time.time + 0.1f; 
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0) {
+            Destroy(gameObject);
+            Explotar();
+        }
     }
 
     void HandlePlayerDamage(GameObject obj)
@@ -144,5 +149,21 @@ public class Enemy : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    void Explotar()
+    {
+        if (efectoParticulas != null)
+        {
+            GameObject particulas = Instantiate(efectoParticulas, transform.position, Quaternion.identity);
+            ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
+            
+            if (ps != null)
+            {
+                ps.Clear(); // Borra cualquier rastro de simulaciones viejas
+                ps.Play();  // Inicia la explosiÃ³n desde el segundo 0
+            }
+        }
+        Destroy(gameObject);
     }
 }
