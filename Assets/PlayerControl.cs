@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {
     [Header("Stats")]
-    public float speed = 5f;
+    public float speed = 35f;
     public float health = 100f;
     public float MaxHealth = 100f;
     public float shield = 50f;
@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Atac")]
     public GameObject punt_atac;
-    public float attackCooldown = 0.2f;
+    public float attackCooldown = 0.1f;
     public float attackDuration = 0.2f;
 
     private float currentAttackTimer;
@@ -21,7 +21,10 @@ public class PlayerControl : MonoBehaviour
     private bool lookingLeft = false;
 
     enum playerstate { idle, running, dead, attacking, parrying }
+    private Animator anim;
+
     playerstate currentstate = playerstate.idle;
+    
 
     [Header("Nivells")]
     public int level = 0;
@@ -36,6 +39,8 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         gameObject.tag = "Player";
 
+        anim = GetComponent<Animator>();
+        
         if (punt_atac != null) punt_atac.SetActive(false);
 
         // Configuración de Hitboxes e Hijos
@@ -43,7 +48,11 @@ public class PlayerControl : MonoBehaviour
         Transform hijoSquare = transform.Find("Square");
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
 
-        if (hijoSquare != null) hijoSquare.gameObject.tag = "Player_attack";
+        if (hijoSquare != null) {
+            hijoSquare.gameObject.tag = "Player_attack";
+            punt_atac = hijoSquare.gameObject;
+            punt_atac.SetActive(false);
+        }
 
         if (hijoColisionador != null)
         {
@@ -69,20 +78,45 @@ public class PlayerControl : MonoBehaviour
 
         if (keyboard.mKey.wasPressedThisFrame && able_to_attack)
         {
-            StartAttack();
+           if(StartAttack())
+            {
+                anim.SetBool("isPunch", true);
+                anim.SetBool("isIdle", false);
+                anim.SetBool("isRunning", false);
+            
+            }
+            else
+            {
+                anim.SetBool("isPunch", false);
+            }
             return;
+        } 
+        else 
+        {
+            anim.SetBool("isPunch", false);
         }
 
-        HandleMovement();
+        bool mov =  HandleMovement();
+        if (!mov){
+            anim.SetBool("isIdle", true);
+            anim.SetBool("isRunning", false);
+        }
+        else
+        {
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isRunning", true);
+        }
 
         // Estado de animación/estado
         if (rb.linearVelocity.magnitude > 0.1f)
             currentstate = playerstate.running;
         else
             currentstate = playerstate.idle;
+        
     }
 
-    void HandleMovement()
+    
+    bool HandleMovement()
     {
         var keyboard = Keyboard.current;
         float moveX = (keyboard.aKey.isPressed ? -1 : 0) + (keyboard.dKey.isPressed ? 1 : 0);
@@ -92,8 +126,10 @@ public class PlayerControl : MonoBehaviour
         else if (moveX > 0 && lookingLeft) Flip();
 
         rb.linearVelocity = new Vector2(moveX, moveY).normalized * speed;
-    }
 
+        return moveX != 0 || moveY != 0;
+    }   
+    
     void Flip()
     {
         lookingLeft = !lookingLeft;
@@ -102,18 +138,24 @@ public class PlayerControl : MonoBehaviour
         transform.localScale = scale;
     }
 
-    void StartAttack()
+    bool StartAttack()
     {
         currentstate = playerstate.attacking;
         able_to_attack = false;
         currentAttackTimer = attackDuration;
-        if (punt_atac != null) punt_atac.SetActive(true);
+        if (punt_atac != null) {
+            punt_atac.SetActive(true);
+            return true;
+        }
+        return false;   
+        
     }
 
-    void EndAttack()
+    public void EndAttack()
     {
         currentstate = playerstate.idle;
         if (punt_atac != null) punt_atac.SetActive(false);
+        anim.SetBool("isPunch", false);
         Invoke(nameof(ResetCooldown), attackCooldown);
     }
 
