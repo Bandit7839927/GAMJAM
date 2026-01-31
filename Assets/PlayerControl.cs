@@ -5,8 +5,7 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {
     [Header("Stats")]
-    public int level = 1;
-    public int exp = 0;
+    public int level = 0;
     public float speed = 5f;
     public float health = 100f;
     public float shield = 50f;
@@ -23,6 +22,11 @@ public class PlayerControl : MonoBehaviour
 
     enum playerstate { idle, running, dead, attacking, parrying }
     playerstate currentstate = playerstate.idle;
+    //Merdes de nivells
+    int[] xp_lvl = {1, 10, 20, 30, 40};
+    public int exp = 0;
+    public int current_lvl = 0;
+    public levelUpHandler levelManager;
     private Rigidbody2D rb;
 
     void Start()
@@ -105,7 +109,13 @@ public class PlayerControl : MonoBehaviour
         currentAttackTimer = attackDuration;
         if (punt_atac != null) punt_atac.SetActive(true);
     }
-
+    public void Exp_Gained(){
+        while(exp >= xp_lvl[level]){   //Si tenim mes
+            level++;
+            //Aqui chati diu que podriem augmentar sempre la vida
+            levelManager.show_update();
+        }
+    }
     void EndAttack()
     {
         currentstate = playerstate.idle;

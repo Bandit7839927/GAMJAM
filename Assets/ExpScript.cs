@@ -13,6 +13,7 @@ public class ExpScript : Collectible
         {
             playerControl.exp += value;
             Debug.Log("¡EXP añadida! Total en el jugador: " + playerControl.exp);
+            playerControl.Exp_Gained();
         }
         else 
         {
