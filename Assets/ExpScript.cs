@@ -1,16 +1,23 @@
 using UnityEngine;
 
-public class ExpScript : MonoBehaviour
+public class ExpScript : Collectible
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int value = 1; 
 
-    // Update is called once per frame
-    void Update()
+    protected override void ApplyEffect(GameObject objectThatTouchedMe)
     {
-        
+        // BUSCAMOS EN EL PADRE: Esto soluciona el problema del hijo colisionador
+        PlayerControl playerControl = objectThatTouchedMe.GetComponentInParent<PlayerControl>();
+
+        if (playerControl != null)
+        {
+            playerControl.exp += value;
+            Debug.Log("¡EXP añadida! Total en el jugador: " + playerControl.exp);
+        }
+        else 
+        {
+            // Si ves esto en la consola, el script PlayerControl no está en el padre
+            Debug.LogWarning("No se encontró PlayerControl en el padre de: " + objectThatTouchedMe.name);
+        }
     }
 }
