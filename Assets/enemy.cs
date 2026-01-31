@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
             // Get the PlayerControl from the attack collider or its parent and use its damage value
             PlayerControl pc = collision.GetComponentInParent<PlayerControl>();
             if (pc == null)
-                pc = FindObjectOfType<PlayerControl>();
+                pc = FindFirstObjectByType<PlayerControl>();
 
             if (pc != null)
                 TakeDamage(pc.playerDamage);

@@ -32,8 +32,12 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameObject.tag = "Player";
         if (punt_atac != null) punt_atac.SetActive(false);
         Transform hijoColisionador = transform.Find("ObjCollider");
+        Transform hijoSquare = transform.Find("Square");
+        hijoSquare.gameObject.tag = "Player_attack";
+
     
         if (hijoColisionador != null)
         {
@@ -43,6 +47,7 @@ public class PlayerControl : MonoBehaviour
             {
                 col.isTrigger = true;
             }
+            hijoColisionador.gameObject.tag = "PlayerHitbox";
         }
     }
 
