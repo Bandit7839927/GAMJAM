@@ -10,6 +10,23 @@ public class ObjecteRecollible : MonoBehaviour
 
     void Start()
     {
+        // Hardcode for ampolla1 to ampolla5
+        if (gameObject.name.Contains("ampolla"))
+        {
+            if (prefabDeLobjecte == null)
+            {
+                prefabDeLobjecte = Resources.Load<GameObject>("ampolla_item");
+            }
+            if (iconaVisual == null)
+            {
+                Transform square = transform.Find("Square");
+                if (square != null)
+                {
+                    iconaVisual = square.gameObject;
+                }
+            }
+        }
+
         // 1. Al començar, apaguem l'icona perquè no es vegi d'inici
         if (iconaVisual != null)
         {
