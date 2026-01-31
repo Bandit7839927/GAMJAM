@@ -26,6 +26,18 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         if (punt_atac != null) punt_atac.SetActive(false);
+        Transform hijoColisionador = transform.Find("ObjCollider");
+    
+        if (hijoColisionador != null)
+        {
+            // Obtenemos su Collider y forzamos el IsTrigger
+            Collider2D col = hijoColisionador.GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.isTrigger = true;
+                Debug.Log("Hitbox de recolección configurada como Trigger automáticamente.");
+            }
+        }
     }
 
     void Update()
