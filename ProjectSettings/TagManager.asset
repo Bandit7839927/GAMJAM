@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlayerHitbox
+  - Enemy
+  - Player_attack
+  - Ground
+  - Particles
   layers:
   - Default
   - TransparentFX
