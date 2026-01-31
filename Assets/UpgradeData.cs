@@ -21,5 +21,8 @@ public enum StatType
 { 
     MaxHealth, 
     Speed, 
-    AttackDamage 
+    AttackDamage,
+    Cooldown,
+    shield,
+    attackSpeed
 }

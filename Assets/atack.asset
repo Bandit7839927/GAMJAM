@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: Atack
   description: +5 Damage
-  icon: {fileID: 0}
+  icon: {fileID: -399930119697726482, guid: 1704f75746a594c48be05e6d14d8be8d, type: 3}
   statToBuff: 2
   amount: 5
   isPermanent: 0

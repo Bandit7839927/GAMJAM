@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Stats")]
     public float speed = 5f;
     public float health = 100f;
+    public float MaxHealth = 100f;
     public float shield = 50f;
     public float playerDamage = 10f;
 
