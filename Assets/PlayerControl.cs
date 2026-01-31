@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Nivells")]
     public int level = 0;
     public int exp = 0;
-    int[] xp_lvl = { 1, 10, 20, 30, 40 };
+    public int[] xp_lvl = { 5, 10, 20, 30, 40 };
     public levelUpHandler levelManager;
     
     private Rigidbody2D rb;
