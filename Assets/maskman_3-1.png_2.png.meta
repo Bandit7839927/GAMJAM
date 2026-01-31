@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 239e103bf0ce045489f091fa9f2cc70e
+guid: 521f66683a5b7924bbd0a20f12a9e3f3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2289058232797270630
-    second: pixil-frame-0_15_0
+      213: -5643762848112814358
+    second: maskman_3-1.png_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixil-frame-0_15_0
+      name: maskman_3-1.png_2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 176
+        height: 244
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6629014b55e54cf10800000000000000
-      internalID: 2289058232797270630
+      spriteID: ae650b177935da1b0800000000000000
+      internalID: -5643762848112814358
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pixil-frame-0_15_0: 2289058232797270630
+      maskman_3-1.png_2_0: -5643762848112814358
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

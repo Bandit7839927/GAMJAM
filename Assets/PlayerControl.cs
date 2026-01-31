@@ -41,6 +41,7 @@ public class PlayerControl : MonoBehaviour
         // Configuración de Hitboxes e Hijos
         Transform hijoColisionador = transform.Find("ObjCollider");
         Transform hijoSquare = transform.Find("Square");
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
 
         if (hijoSquare != null) hijoSquare.gameObject.tag = "Player_attack";
 
