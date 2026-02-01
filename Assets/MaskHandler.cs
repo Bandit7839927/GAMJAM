@@ -8,6 +8,8 @@ public class MaskHandler : MonoBehaviour
 
     public PlayerControl player; // Arrossega el teu jugador aquí
     public GameObject MaskPanel; // Arrossega el Panel de la UI
+    public GameObject UI_player; // La UI normal del jugador
+    public Image slotInventoriUI; // La UI normal del jugador
     public Image mascara_UI;    
 
     public MaskButton button1; // Script que farem ara (veure pas 4)
@@ -25,11 +27,26 @@ public class MaskHandler : MonoBehaviour
         {
             MaskPanel.SetActive(true); // MOSTRAR la pantalla de selecció
             Time.timeScale = 0f;       // PAUSAR el joc fins que triïn
+            if (slotInventoriUI == null)
+            {
+                // Busquem l'objecte pel seu nom exacte a la jerarquia
+                GameObject UIp = GameObject.Find("UI"); 
+
+                if (UIp != null)
+                {
+                    UI_player = UIp;
+                }
+                else
+                {
+                    Debug.LogError("No s'ha trobat cap objecte anomenat 'UI'!");
+                }
+            }
             show_update_mask();        // Carregar les dades als botons
         }
     }
 
     public void show_update_mask(){
+        UI_player.SetActive(false);
         // 1. PAUSEM EL JOC
         Time.timeScale = 0f; 
         MaskPanel.SetActive(true);
@@ -47,6 +64,7 @@ public class MaskHandler : MonoBehaviour
         button1.Setup(choice1, this);
         button2.Setup(choice2, this);
         button3.Setup(choice3, this);
+        
     }
 
     public void ApplyUpgrade_Mask(MaskData upgrade)
@@ -64,6 +82,7 @@ public class MaskHandler : MonoBehaviour
     void CloseMenu()
     {
         MaskPanel.SetActive(false);
+        UI_player.SetActive(true);
         Time.timeScale = 1f; // TORNEM A ARRENCAR EL JOC
     }
 }

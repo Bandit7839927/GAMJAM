@@ -79,7 +79,22 @@ public class PlayerControl : MonoBehaviour
         {
             levelManager = FindObjectOfType<levelUpHandler>();
         }
+        if (slotInventoriUI == null)
+        {
+            // Busquem l'objecte pel seu nom exacte a la jerarquia
+            GameObject objSlot = GameObject.Find("slot_inventory"); 
 
+            if (objSlot != null)
+            {
+                slotInventoriUI = objSlot.GetComponent<UnityEngine.UI.Image>();
+            }
+            else
+            {
+                Debug.LogError("No s'ha trobat cap objecte anomenat 'slot_inventory'!");
+            }
+        }
+        
+    
         MaskManager = FindObjectOfType<MaskHandler>();
         MaskManager.show_update_mask();
     }
