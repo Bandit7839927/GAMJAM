@@ -7,22 +7,28 @@ public class Boss : MonoBehaviour
     public float health = 20f;
     public int damage = 10;
     public float detectionRange = 50f;
-    public float attackRange = 15f; // Rango para dejar de caminar y golpear
+    public float attackRange = 15f; 
     public int xp_drop = 5;
+
     [Header("Attack Settings")]
     public float damageInterval = 1.0f; 
     public float punchDuration = 0.3f;
     private float nextAttackAllowedTime = 0f;
     private float nextDamageTimeToPlayer = 0f; 
-    private float punchEndTime = 0f; // Momento en que debe terminar la animación
+    private float punchEndTime = 0f; 
+
+    [Header("Audio")]
+    public AudioSource punch; // Assigna un AudioSource amb el clip de cop
+    public AudioSource death; // Assigna un AudioSource amb el clip de mort
 
     private Transform player;
     private Rigidbody2D rb;
     private float nextTimeEnemyCanBeHit = 0f;
     private Animator anim;
     private bool lookingLeft = true;
+    private bool isDead = false; // Control per no morir dues vegades
 
-    public int idMascaraADesbloquejar = 1; // Posa aquí l'ID que vulguis (ex: 1 per la de Mèxic)
+    public int idMascaraADesbloquejar = 1; 
 
     void Start()
     {
@@ -36,21 +42,19 @@ public class Boss : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (player == null) return;
+        if (player == null || isDead) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
         bool isPunching = Time.time < punchEndTime;
 
         if (isPunching) 
         {
-            // Forzamos el estado de ataque y salimos
             if (!anim.GetBool("IsPunch")) anim.SetBool("IsPunch", true);
             anim.SetBool("IsWalk", false);
             rb.linearVelocity = Vector2.zero; 
             return; 
         }
 
-        // Si llegamos aquí, NO estamos golpeando (isPunching es false)
         anim.SetBool("IsPunch", false);
 
         if (dist < detectionRange)
@@ -66,7 +70,6 @@ public class Boss : MonoBehaviour
             }
             else 
             {
-                // Detenemos y atacamos
                 rb.linearVelocity = Vector2.zero;
                 anim.SetBool("IsWalk", false);
                 StartPunchAnimation();
@@ -77,6 +80,7 @@ public class Boss : MonoBehaviour
             anim.SetBool("IsWalk", false);
         }
     }
+
     void StartPunchAnimation()
     {
         if (Time.time >= nextAttackAllowedTime) 
@@ -86,46 +90,63 @@ public class Boss : MonoBehaviour
             punchEndTime = Time.time + punchDuration;
             nextAttackAllowedTime = Time.time + damageInterval; 
             
-            // Debug para que veas en consola si ataca
+            // Reproduir so de cop
+            if (punch
+     != null) punch
+    .Play();
+
             Debug.Log("BOSS Ataca!");
         }
-        else {anim.SetBool("IsPunch", false);}
+        else { anim.SetBool("IsPunch", false); }
     }
-    public void TakeDamage(float amount)
-{
-    if (Time.time < nextTimeEnemyCanBeHit) return; 
-    health -= amount;
-    nextTimeEnemyCanBeHit = Time.time + 0.1f; 
 
-    if (health <= 0)
+    public void TakeDamage(float amount)
     {
+        if (Time.time < nextTimeEnemyCanBeHit || isDead) return; 
+        health -= amount;
+        nextTimeEnemyCanBeHit = Time.time + 0.1f; 
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+        rb.linearVelocity = Vector2.zero;
+        anim.enabled = false;
+
+        // So de mort (fem servir PlayClipAtPoint perquè el so no es talli al destruir l'objecte)
+        if (death != null)
+        {
+            death.Play();
+        } //Explotar();
+
         PlayerControl pc = player.GetComponent<PlayerControl>();
         if (pc != null)
         {
-            // 1. Donem experiència
             pc.exp += xp_drop;
             pc.Exp_Gained();
-
-            // 2. DESBLOQUEGEM LA MÀSCARA
             pc.DesbloquejarMascara(idMascaraADesbloquejar);
-            
             Debug.Log("BOSS Derrotat! Mascara " + idMascaraADesbloquejar + " desbloquejada.");
         }
 
         Destroy(gameObject);
     }
-}
 
     void HandlePlayerDamage(GameObject obj)
     {
-        if (Time.time >= nextDamageTimeToPlayer)
+        if (Time.time >= nextDamageTimeToPlayer && !isDead)
         {
             PlayerControl pc = obj.GetComponentInParent<PlayerControl>();
             if (pc != null)
             {
                 pc.TakeDamage(damage);
                 nextDamageTimeToPlayer = Time.time + damageInterval;
-                StartPunchAnimation(); // Activa la animación al tocar al jugador
+                StartPunchAnimation(); 
             }
         }
     }
@@ -143,21 +164,15 @@ public class Boss : MonoBehaviour
             if (pc != null) TakeDamage(pc.playerDamage);
         }
 
-        if (collision.CompareTag("Projectil")) // Assegura't que l'ampolla tingui aquest Tag
+        if (collision.CompareTag("Projectil"))
         {
-            // Busquem les dades del projectil per saber quant mal fa
             DadesProjectil dades = collision.GetComponent<DadesProjectil>();
-            
             if (dades != null)
             {
-                TakeDamage(dades.damage); // Apliquem el dany definit a l'objecte
-                Debug.Log("Enemic colpejat per projectil! Mal rebut: " + dades.damage);
-                
-                // Opcional: Destruir el projectil en col·lidir amb l'enemic
+                TakeDamage(dades.damage);
                 Destroy(collision.gameObject); 
             }
         }
-
     }
 
     void OnTriggerStay2D(Collider2D collision)
