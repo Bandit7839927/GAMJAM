@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fcc9448c138334e8a711c38ccac4fb, type: 3}
+  m_Name: Mask_samu
+  m_EditorClassIdentifier: Assembly-CSharp::MaskData
+  idMask: 2
+  maskName: Samu
+  description: nigiri
+  menuIcon: {fileID: 8567009694106541761, guid: d19ce00d7f9811047bbdc4f29cd7676f, type: 3}
+  inGameSprite: {fileID: 0}
+  bonusHealth: 0
+  bonusDamage: 0
+  bonusSpeed: 0
+  bonusShield: 0

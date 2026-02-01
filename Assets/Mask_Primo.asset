@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fcc9448c138334e8a711c38ccac4fb, type: 3}
+  m_Name: Mask_Primo
+  m_EditorClassIdentifier: Assembly-CSharp::MaskData
+  idMask: 1
+  maskName: El primo
+  description: 'Soy el mejooor
+
+    Unos taquitos?'
+  menuIcon: {fileID: -2447272973560517808, guid: ece3b9919c70fc54c9041f33e7ea4c4d, type: 3}
+  inGameSprite: {fileID: 0}
+  bonusHealth: 0
+  bonusDamage: 0
+  bonusSpeed: 0
+  bonusShield: 0
