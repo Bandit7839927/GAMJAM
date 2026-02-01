@@ -9,6 +9,16 @@ public class MainMenu_options : MonoBehaviour
         SceneManager.LoadSceneAsync(1);
     }
 
+    public void ResetProgressButton()
+    {
+        // Això esborra ABSOLUTAMENT TOT (millores, màscares, nivells)
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Progrés esborrat per a una nova experiència des de zero.");
+        
+        // Opcional: Recarregar l'escena per visualitzar els canvis si cal
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void ExitButton(){
         Application.Quit();
     }

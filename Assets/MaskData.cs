@@ -13,8 +13,8 @@ public class MaskData : ScriptableObject
     public Sprite inGameSprite; // La màscara que es veurà posada al personatge
 
     [Header("Poders")]
-    public float bonusHealth;
-    public float bonusDamage;
-    public float bonusSpeed;
-    public float bonusShield;
+    public float baseHealth;
+    public float baseDamage;
+    public float baseSpeed;
+    public float baseShield;
 }

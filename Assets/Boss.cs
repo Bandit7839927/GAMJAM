@@ -22,6 +22,7 @@ public class Boss : MonoBehaviour
     private Animator anim;
     private bool lookingLeft = true;
 
+    public int idMascaraADesbloquejar = 1; // Posa aquí l'ID que vulguis (ex: 1 per la de Mèxic)
 
     void Start()
     {
@@ -91,16 +92,29 @@ public class Boss : MonoBehaviour
         else {anim.SetBool("IsPunch", false);}
     }
     public void TakeDamage(float amount)
+{
+    if (Time.time < nextTimeEnemyCanBeHit) return; 
+    health -= amount;
+    nextTimeEnemyCanBeHit = Time.time + 0.1f; 
+
+    if (health <= 0)
     {
-        if (Time.time < nextTimeEnemyCanBeHit) return; 
-        health -= amount;
-        nextTimeEnemyCanBeHit = Time.time + 0.1f; 
-        if (health <= 0){
-            player.GetComponent<PlayerControl>().exp += xp_drop; // Dona experiència al jugador
-            player.GetComponent<PlayerControl>().Exp_Gained();
-            Destroy(gameObject);
+        PlayerControl pc = player.GetComponent<PlayerControl>();
+        if (pc != null)
+        {
+            // 1. Donem experiència
+            pc.exp += xp_drop;
+            pc.Exp_Gained();
+
+            // 2. DESBLOQUEGEM LA MÀSCARA
+            pc.DesbloquejarMascara(idMascaraADesbloquejar);
+            
+            Debug.Log("BOSS Derrotat! Mascara " + idMascaraADesbloquejar + " desbloquejada.");
         }
+
+        Destroy(gameObject);
     }
+}
 
     void HandlePlayerDamage(GameObject obj)
     {

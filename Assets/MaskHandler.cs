@@ -45,27 +45,23 @@ public class MaskHandler : MonoBehaviour
         }
     }
 
-    public void show_update_mask(){
-        UI_player.SetActive(false);
-        // 1. PAUSEM EL JOC
-        Time.timeScale = 0f; 
-        MaskPanel.SetActive(true);
+    public void show_update_mask()
+{
+    UI_player.SetActive(false);
+    Time.timeScale = 0f; 
+    MaskPanel.SetActive(true);
 
-        // 1. Triem el primer
-        MaskData choice1 = possibleMask[0];
+    // Comprovem si el jugador té les màscares desbloquejades
+    // possibleMask[0] és la màscara 1, etc.
+    bool te1 = player.mascaresDesbloquejades.Contains(possibleMask[0].idMask);
+    bool te2 = player.mascaresDesbloquejades.Contains(possibleMask[1].idMask);
+    bool te3 = player.mascaresDesbloquejades.Contains(possibleMask[2].idMask);
 
-        // 2. Triem el segon (assegurant que no és igual al primer)
-        MaskData choice2 = possibleMask[1];
-
-        // 3. Triem el tercer (assegurant que no és igual ni al 1 ni al 2)
-        MaskData choice3 = possibleMask[2];
-
-        // Configurem els 3 botons
-        button1.Setup(choice1, this);
-        button2.Setup(choice2, this);
-        button3.Setup(choice3, this);
-        
-    }
+    // Passem la informació de si està desbloquejada o no al Setup
+    button1.Setup(possibleMask[0], this, te1);
+    button2.Setup(possibleMask[1], this, te2);
+    button3.Setup(possibleMask[2], this, te3);
+}
 
     public void ApplyUpgrade_Mask(MaskData upgrade)
     {
