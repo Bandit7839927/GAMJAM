@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "GAMJAM.slnx"
+    "dotnet.defaultSolution": "ELMASKARAS2.slnx"
 }
