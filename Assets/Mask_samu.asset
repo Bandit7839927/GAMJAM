@@ -17,7 +17,7 @@ MonoBehaviour:
   description: nigiri
   menuIcon: {fileID: 8567009694106541761, guid: d19ce00d7f9811047bbdc4f29cd7676f, type: 3}
   inGameSprite: {fileID: 0}
-  bonusHealth: 0
-  bonusDamage: 0
-  bonusSpeed: 0
-  bonusShield: 0
+  baseHealth: 100
+  baseDamage: 25
+  baseSpeed: 50
+  baseShield: 10
