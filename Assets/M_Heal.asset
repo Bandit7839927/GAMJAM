@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: M_Heal
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: Cura
-  description: "Cura un 10% \nde la vida max"
+  description: "Cura un 50% \nde la vida max"
   icon: {fileID: 2139083910185001829, guid: 955224d689f13dd4fa539d2f87dfbf22, type: 3}
   backgroundColor: {r: 1, g: 0, b: 0, a: 1}
   statToBuff: 6
-  amount: 0.1
+  amount: 0.5
   isPermanent: 0

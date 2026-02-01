@@ -17,7 +17,7 @@ MonoBehaviour:
   description: ...
   menuIcon: {fileID: -593140000301710946, guid: cb29cc374267b584b83d4b4a709d0691, type: 3}
   inGameSprite: {fileID: 0}
-  baseHealth: 25
-  baseDamage: 5
+  baseHealth: 30
+  baseDamage: 6
   baseSpeed: 35
   baseShield: 10

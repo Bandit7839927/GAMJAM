@@ -106,6 +106,7 @@ public class levelUpHandler : MonoBehaviour
             break;
         case StatType.Mask_Health:
             player.MaxHealth += upgrade.amount;
+            player.health += upgrade.amount;
             player.maxHealthExtra += upgrade.amount;
             break;
     }

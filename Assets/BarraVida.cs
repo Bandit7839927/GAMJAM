@@ -1,23 +1,31 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 public class BarraVida : MonoBehaviour
 {
     public Image BarraDeVida;
     private PlayerControl PlayerControler;
-    private float vida_maxima;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        PlayerControler = GameObject.Find("Player").GetComponent<PlayerControl>();
-        vida_maxima = PlayerControler.MaxHealth;
-
+        // Busquem el jugador
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            PlayerControler = playerObj.GetComponent<PlayerControl>();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        BarraDeVida.fillAmount = PlayerControler.health / vida_maxima;
+        if (PlayerControler != null && BarraDeVida != null)
+        {
+            // IMPORTANT: Llegim sempre la MaxHealth actual del Player
+            // Així, si la màscara dona més vida, la barra ho sabrà.
+            float percentatge = PlayerControler.health / PlayerControler.MaxHealth;
+
+            // Ens assegurem que el valor estigui entre 0 i 1 per evitar errors visuals
+            BarraDeVida.fillAmount = Mathf.Clamp01(percentatge);
+        }
     }
 }

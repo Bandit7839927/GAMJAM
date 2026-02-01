@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1053a0c632ecc084794c934455986903, type: 3}
   m_Name: M_maskmaxHealth
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
-  upgradeName: VidaMascara
-  description: +20 mascara
-  icon: {fileID: 0}
+  upgradeName: Vida
+  description: '+15 mascara
+
+    PERMANENT'
+  icon: {fileID: -4654924404285740728, guid: 50c6cb9ec8ef31846bbdcefd8c2bfb02, type: 3}
   backgroundColor: {r: 1, g: 0.5384036, b: 0, a: 1}
   statToBuff: 8
-  amount: 20
+  amount: 15
   isPermanent: 1
