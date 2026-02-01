@@ -39,7 +39,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Nivells")]
     public int level = 0;
     public int exp = 0;
-    public int[] xp_lvl = { 3, 10, 20, 30, 40 };
+    public int[] xp_lvl = { 3, 5, 10, 15, 40 };
     public levelUpHandler levelManager;
     public MaskHandler MaskManager;
     private Rigidbody2D rb;
@@ -94,7 +94,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
         
-    
+
         MaskManager = FindObjectOfType<MaskHandler>();
         MaskManager.show_update_mask();
     }
@@ -156,10 +156,24 @@ public class PlayerControl : MonoBehaviour
         }
         // CAS 2: No tenim res (hem llançat l'objecte)
         else if (slotInventoriUI != null)
-        {
-            // Apaguem la imatge
-            slotInventoriUI.gameObject.SetActive(false);
-        }
+{
+    // En lloc d'apagar l'objecte, li posem la imatge de fons "Boto"
+    // Nota: No posis l'extensió (.png o .jpg), només el nom.
+    Sprite fonsBuit = Resources.Load<Sprite>("Boto");
+
+    if (fonsBuit != null)
+    {
+        slotInventoriUI.sprite = fonsBuit;
+        slotInventoriUI.color = Color.white; // Ens assegurem que sigui visible
+    }
+    else
+    {
+        // Si no troba la imatge, almenys que no es vegi res
+        slotInventoriUI.sprite = null;
+        slotInventoriUI.color = new Color(1, 1, 1, 0); 
+        Debug.LogWarning("No s'ha trobat l'imatge 'Boto' a la carpeta Resources!");
+    }
+}
     }
 
     void LlançarItem()

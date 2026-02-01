@@ -62,6 +62,14 @@ public class levelUpHandler : MonoBehaviour
                 // player.attackDamage += upgrade.amount;
                 player.playerDamage += upgrade.amount;
                 break;
+            case StatType.shield:
+                // Assegura't de tenir aquesta variable al PlayerControl
+                // player.attackDamage += upgrade.amount;
+                player.shield += upgrade.amount;
+                break;
+            case StatType.Cooldown:
+                player.attackCooldown -= player.attackCooldown * upgrade.amount;
+                break;
         }
 
         // Si és permanent, la guardem (Exemple bàsic)

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1053a0c632ecc084794c934455986903, type: 3}
+  m_Name: M_Vida
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
+  upgradeName: VidaExtra
+  description: "RedBull que et dona \n+30 vida maxima "
+  icon: {fileID: -4654924404285740728, guid: 50c6cb9ec8ef31846bbdcefd8c2bfb02, type: 3}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  statToBuff: 0
+  amount: 30
+  isPermanent: 0
