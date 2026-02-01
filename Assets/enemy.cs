@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float detectionRange = 50f;
     public int xp_drop = 1;
     public float attackRange = 15f; // Rango para dejar de caminar y golpear
+    private bool isDead = false;
 
     [Header("Attack Settings")]
     public float damageInterval = 1.0f; 
@@ -24,6 +25,10 @@ public class Enemy : MonoBehaviour
     private float nextTimeEnemyCanBeHit = 0f;
     private Animator anim;
     private bool lookingLeft = true;
+
+    [Header("Audio")]
+    public AudioSource panchoPunch;
+    public AudioSource death;
 
 
     void Start()
@@ -84,29 +89,35 @@ public class Enemy : MonoBehaviour
     }
     void StartPunchAnimation()
     {
-        if (Time.time >= nextAttackAllowedTime) 
+        if (Time.time >= nextAttackAllowedTime)
         {
             anim.SetBool("isPunch", true);
             anim.SetBool("isRunning", false);
-            
+
             punchEndTime = Time.time + punchDuration;
-            nextAttackAllowedTime = Time.time + damageInterval; 
-            
-            // Debug para que veas en consola si ataca
-            Debug.Log("Enemigo Ataca!");
+            nextAttackAllowedTime = Time.time + damageInterval;
+
+            if (panchoPunch != null)
+                panchoPunch.Play();
         }
-        else {anim.SetBool("isPunch", false);}
+        else
+        {
+            anim.SetBool("isPunch", false);
+        }
     }
     public void TakeDamage(float amount)
     {
         if (Time.time < nextTimeEnemyCanBeHit) return; 
         health -= amount;
         nextTimeEnemyCanBeHit = Time.time + 0.1f; 
-        if (health <= 0){
-            player.GetComponent<PlayerControl>().exp += xp_drop; // Dona experiència al jugador
+        if (health <= 0 && !isDead)
+        {
+            isDead = true;
+
+            player.GetComponent<PlayerControl>().exp += xp_drop;
             player.GetComponent<PlayerControl>().Exp_Gained();
-            Destroy(gameObject);
-            Explotar();
+
+            Die();
         }
     }
 
@@ -196,18 +207,31 @@ public class Enemy : MonoBehaviour
     }
 
     void Explotar()
-{
-    if (efectoParticulas != null)
     {
-        GameObject particulas = Instantiate(efectoParticulas, transform.position, Quaternion.identity);
-        ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
-        
-        if (ps != null)
+        if (efectoParticulas != null)
         {
-            ps.Clear(); // Borra cualquier rastro de simulaciones viejas
-            ps.Play();  // Inicia la explosión desde el segundo 0
+            GameObject particulas = Instantiate(efectoParticulas, transform.position, Quaternion.identity);
+            ParticleSystem ps = particulas.GetComponent<ParticleSystem>();
+
+            if (ps != null)
+            {
+                ps.Clear();
+                ps.Play();
+            }
         }
     }
+
+void Die()
+{
+    // stop movement & AI
+    rb.linearVelocity = Vector2.zero;
+    anim.enabled = false;
+
+    if (death != null)
+        death.Play();
+
+    Explotar();
+
     Destroy(gameObject);
 }
 

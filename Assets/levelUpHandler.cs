@@ -13,40 +13,38 @@ public class levelUpHandler : MonoBehaviour
     public UpgradeButton button3;
 
     public List<UpgradeData> possibleUpgrades;
-
+    [Header("Audio")]
+    public AudioSource lvlUp;
     void Start()
     {
         levelUpPanel.SetActive(false); // Amaguem la pantalla al començar
     }
 
-    public void show_update(){
-        // 1. PAUSEM EL JOC
-        Time.timeScale = 0f; 
+    public void show_update()
+    {
+        
+        if (lvlUp != null)
+            lvlUp.Play();
+
+        // ⏸ PAUSE GAME
+        Time.timeScale = 0f;
         levelUpPanel.SetActive(true);
 
-        // 1. Triem el primer
+        // ---- rest stays the same ----
         UpgradeData choice1 = possibleUpgrades[Random.Range(0, possibleUpgrades.Count)];
 
-        // 2. Triem el segon (assegurant que no és igual al primer)
         UpgradeData choice2 = possibleUpgrades[Random.Range(0, possibleUpgrades.Count)];
         while (choice2 == choice1)
-        {
             choice2 = possibleUpgrades[Random.Range(0, possibleUpgrades.Count)];
-        }
 
-        // 3. Triem el tercer (assegurant que no és igual ni al 1 ni al 2)
         UpgradeData choice3 = possibleUpgrades[Random.Range(0, possibleUpgrades.Count)];
         while (choice3 == choice1 || choice3 == choice2)
-        {
             choice3 = possibleUpgrades[Random.Range(0, possibleUpgrades.Count)];
-        }
 
-        // Configurem els 3 botons
         button1.Setup(choice1, this);
         button2.Setup(choice2, this);
         button3.Setup(choice3, this);
     }
-
     public void ApplyUpgrade(UpgradeData upgrade)
     {
         // APLICAR LA MILLORA AL JUGADOR
