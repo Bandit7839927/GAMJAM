@@ -33,6 +33,7 @@ public class MaskButton : MonoBehaviour
         if(manager != null)
         {
             manager.ApplyUpgrade_Mask(myMask);
+            Debug.Log(myMask.maskName + " seleccionada!");
         }
     }
 }

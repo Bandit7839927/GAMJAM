@@ -18,7 +18,15 @@ public class MaskHandler : MonoBehaviour
 
     void Start()
     {
-        MaskPanel.SetActive(true); // Amaguem la pantalla al començar
+        // Busquem el jugador si no està assignat
+        if (player == null) player = FindObjectOfType<PlayerControl>();
+
+        if (MaskPanel != null) 
+        {
+            MaskPanel.SetActive(true); // MOSTRAR la pantalla de selecció
+            Time.timeScale = 0f;       // PAUSAR el joc fins que triïn
+            show_update_mask();        // Carregar les dades als botons
+        }
     }
 
     public void show_update_mask(){
@@ -43,17 +51,12 @@ public class MaskHandler : MonoBehaviour
 
     public void ApplyUpgrade_Mask(MaskData upgrade)
     {
-        // APLICAR LA MILLORA AL JUGADOR
+        // 1. Apliquem la icona a la UI
+        if (mascara_UI != null) mascara_UI.sprite = upgrade.menuIcon;
 
-        mascara_UI.sprite = upgrade.menuIcon;
-        player.currMask = upgrade.idMask; 
-        player.health += upgrade.bonusHealth;
-        // Si tens barra de vida, actualitza-la aquí
-        player.speed += upgrade.bonusSpeed;
-        // Assegura't de tenir aquesta variable al PlayerControl
-        // player.attackDamage += upgrade.amount;
-        player.playerDamage += upgrade.bonusDamage;
-        player.shield += upgrade.bonusShield;
+        // 2. Cridem a una funció nova al PlayerControl per gestionar el canvi
+        // En lloc de sumar variables aquí, deixem que el Player ho gestioni tot
+        player.EquipMask(upgrade); 
 
         CloseMenu();
     }

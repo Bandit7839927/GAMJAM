@@ -21,5 +21,5 @@ MonoBehaviour:
   inGameSprite: {fileID: 0}
   bonusHealth: 0
   bonusDamage: 0
-  bonusSpeed: 0
+  bonusSpeed: 16.3
   bonusShield: 0

@@ -182,6 +182,7 @@ public class PlayerControl : MonoBehaviour
     
     void Update()
     {
+        anim.SetFloat("animMask", currMask);
         if (currentstate == playerstate.dead) return;
 
         if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -349,5 +350,62 @@ public class PlayerControl : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void ChangeMask(int maskID)
+    {
+        // 1. Reset stats a la base (per no acumular bonus infinits)
+        speed = 35f;
+        playerDamage = 10f;
+        shield = 50f;
+
+        currMask = maskID;
+
+        // 2. Aplicar Passive Bonus segons la màscara
+        switch (currMask)
+        {
+            case 1: // Màscara de Velocitat
+                speed *= 1.5f; 
+                break;
+            case 2: // Màscara de Força
+                playerDamage += 20f;
+                break;
+            case 3: // Màscara de Tanc
+                shield += 30f;
+                break;
+        }
+
+        // 3. Forçar l'actualització de l'Animator immediatament
+        if (anim != null) {
+            anim.SetFloat("animMask", currMask);
+            // Opcional: anim.Play("Idle", 0, 0); // Força el canvi visual
+        }
+        
+        Debug.Log("Màscara canviada a: " + currMask + " | Nova Velocitat: " + speed);
+    }
+
+    public void EquipMask(MaskData dades)
+    {
+        // 1. Reset stats a la base (evita que si canvies de màscara 10 cops tinguis velocitat infinita)
+        speed = 35f; 
+        playerDamage = 10f;
+        shield = 50f;
+
+        // 2. Apliquem els nous bonus de la màscara
+        currMask = dades.idMask;
+        health += dades.bonusHealth;
+        speed += dades.bonusSpeed;
+        playerDamage += dades.bonusDamage;
+        shield += dades.bonusShield;
+
+        // 3. ACTUALITZEM L'ANIMATOR (Això arregla el visual)
+        if (anim != null)
+        {
+            anim.SetFloat("animMask", currMask);
+            // Forcem un petit refresc de l'estat actual perquè el canvi sigui instantani
+            anim.Play(anim.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0);
+        }
+
+        Debug.Log("Màscara equipada: " + dades.idMask + " | Atac actual: " + playerDamage);
     }
 }
