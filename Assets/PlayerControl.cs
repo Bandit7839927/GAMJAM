@@ -40,7 +40,11 @@ public class PlayerControl : MonoBehaviour
     public levelUpHandler levelManager;
     
     private Rigidbody2D rb;
-
+    [Header("Audio")]
+    [Header("Audio Settings")]
+    // Necessitem els dos components AudioSource que es veuen a la teva imatge
+    public AudioSource punch; 
+    public AudioSource death;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -174,6 +178,12 @@ public class PlayerControl : MonoBehaviour
     {
         if (currentstate == playerstate.dead) return;
 
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            punch.Play();
+            Debug.Log("MANUAL PUNCH SOUND");
+        }
+
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
@@ -201,7 +211,9 @@ public class PlayerControl : MonoBehaviour
         if (keyboard.mKey.wasPressedThisFrame && able_to_attack)
         {
            if(StartAttack())
-            {
+            {   
+
+
                 anim.SetBool("isPunch", true);
                 anim.SetBool("isIdle", false);
                 anim.SetBool("isRunning", false);
@@ -265,6 +277,13 @@ public class PlayerControl : MonoBehaviour
         currentstate = playerstate.attacking;
         able_to_attack = false;
         currentAttackTimer = attackDuration;
+
+        if (punch != null)
+        {
+            punch.Stop(); // Aturem si s'estava reproduint un so anterior
+            punch.Play(); // Reproduïm el so actual
+            Debug.Log("S'hauria d'escoltar el PUNCH ara");
+        }
         if (punt_atac != null) {
             punt_atac.SetActive(true);
             return true;
@@ -292,7 +311,7 @@ public class PlayerControl : MonoBehaviour
             currentstate = playerstate.dead;
             rb.linearVelocity = Vector2.zero;
             Debug.Log("Game Over");
-            // Aquí podrías usar Destroy(gameObject) o una animación de muerte
+            Die();
             Destroy(gameObject);
         }
     }
@@ -310,5 +329,19 @@ public class PlayerControl : MonoBehaviour
             } 
             if (level >= xp_lvl.Length) break;
         }
+    }
+    void Die()
+    {
+        currentstate = playerstate.dead;
+        rb.linearVelocity = Vector2.zero;
+
+        if (death != null)
+        {
+            death.transform.parent = null; // detach from player
+            death.Play();
+            Destroy(death.gameObject, death.clip.length);
+        }
+
+        Destroy(gameObject);
     }
 }
