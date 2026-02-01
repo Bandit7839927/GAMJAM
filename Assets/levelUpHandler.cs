@@ -104,6 +104,10 @@ public class levelUpHandler : MonoBehaviour
             player.maxShieldExtra += upgrade.amount;
             player.shield += upgrade.amount;
             break;
+        case StatType.Mask_Health:
+            player.MaxHealth += upgrade.amount;
+            player.maxHealthExtra += upgrade.amount;
+            break;
     }
 
     // 2. GUARDAR PERMANENTMENT AL MOMENT (Si la millora és permanent)

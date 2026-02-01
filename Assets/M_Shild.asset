@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Shild
   description: "Millora +5 en el \nescut"
   icon: {fileID: -8837003133034185964, guid: 3e280cad054a9e34d84f0fb83621dfcd, type: 3}
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColor: {r: 1, g: 0, b: 0, a: 1}
   statToBuff: 4
   amount: 5
   isPermanent: 0

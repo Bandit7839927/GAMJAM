@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: CoolDown
   description: "Disminueix el \ncoolDown un 10%"
   icon: {fileID: -5391197781774159248, guid: 5782d9befec34d045b5b73cf3bbeb0d3, type: 3}
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColor: {r: 1, g: 0, b: 0, a: 1}
   statToBuff: 3
   amount: 0.1
   isPermanent: 0
