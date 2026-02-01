@@ -15,25 +15,31 @@ public class MaskButton : MonoBehaviour
     private MaskData myMask;
     private MaskHandler manager;
 
-    // Aquesta funció la crida el Manager per "pintar" la carta
-    public void Setup(MaskData data, MaskHandler mgr)
+    public Sprite iconaInterrogant; // Assigna una imatge de "?" a l'inspector
+    private bool estaBloquejat = false;
+
+    public void Setup(MaskData data, MaskHandler mgr, bool desbloquejada)
     {
         myMask = data;
         manager = mgr;
+        estaBloquejat = !desbloquejada;
 
-        // Omplim els textos i imatges
-        if(titleText != null) titleText.text = data.maskName;
-        if(descText != null) descText.text = data.description;
-        if(iconImage != null && data.menuIcon != null) iconImage.sprite = data.menuIcon;
+        if (desbloquejada) {
+            if(titleText != null) titleText.text = data.maskName;
+            if(descText != null) descText.text = data.description;
+            if(iconImage != null) iconImage.sprite = data.menuIcon;
+            GetComponent<Button>().interactable = true; // El botó es pot clicar
+        } else {
+            if(titleText != null) titleText.text = "???";
+            if(descText != null) descText.text = "Encara no has trobat aquesta màscara.";
+            if(iconImage != null) iconImage.sprite = iconaInterrogant;
+            GetComponent<Button>().interactable = false; // No es pot triar
+        }
     }
 
-    // Aquesta funció l'has de connectar al "On Click()" del botó a Unity
-    public void OnClick()
-    {
-        if(manager != null)
-        {
+    public void OnClick() {
+        if(!estaBloquejat && manager != null) {
             manager.ApplyUpgrade_Mask(myMask);
-            Debug.Log(myMask.maskName + " seleccionada!");
         }
     }
 }

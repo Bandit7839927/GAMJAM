@@ -19,7 +19,7 @@ MonoBehaviour:
     Unos taquitos?'
   menuIcon: {fileID: -2447272973560517808, guid: ece3b9919c70fc54c9041f33e7ea4c4d, type: 3}
   inGameSprite: {fileID: 0}
-  bonusHealth: 0
-  bonusDamage: 0
-  bonusSpeed: 16.3
-  bonusShield: 0
+  baseHealth: 70
+  baseDamage: 20
+  baseSpeed: 40
+  baseShield: 5
