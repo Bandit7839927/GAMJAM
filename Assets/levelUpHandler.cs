@@ -51,7 +51,7 @@ public class levelUpHandler : MonoBehaviour
         switch (upgrade.statToBuff)
         {
             case StatType.MaxHealth:
-                player.health += upgrade.amount;
+                player.MaxHealth += upgrade.amount;
                 // Si tens barra de vida, actualitza-la aquí
                 break;
             case StatType.Speed:
@@ -69,6 +69,11 @@ public class levelUpHandler : MonoBehaviour
                 break;
             case StatType.Cooldown:
                 player.attackCooldown -= player.attackCooldown * upgrade.amount;
+                break;
+            case StatType.Heal:
+                player.health += player.MaxHealth * upgrade.amount;
+                if (player.health > player.MaxHealth)
+                    player.health = player.MaxHealth;
                 break;
         }
 

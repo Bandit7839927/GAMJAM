@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1053a0c632ecc084794c934455986903, type: 3}
   m_Name: M_Heal
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
-  upgradeName: CoolDown
-  description: "Disminueix el \ncoolDown un 10%"
+  upgradeName: Cura
+  description: "Cura un 10% \nde la vida max"
   icon: {fileID: -5391197781774159248, guid: 5782d9befec34d045b5b73cf3bbeb0d3, type: 3}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  statToBuff: 3
+  statToBuff: 6
   amount: 0.1
   isPermanent: 0

@@ -4884,7 +4884,7 @@ MonoBehaviour:
   speed: 35
   health: 100
   MaxHealth: 100
-  shield: 50
+  shield: 10
   playerDamage: 10
   punt_atac: {fileID: 0}
   attackCooldown: 0.1
@@ -9917,9 +9917,9 @@ MonoBehaviour:
   button3: {fileID: 381841528}
   possibleUpgrades:
   - {fileID: 11400000, guid: 6de9dd2ba34ec034cb1364904423b7f5, type: 2}
-  - {fileID: 11400000, guid: eb673ca5b2a302147a3b5b02a679bcba, type: 2}
-  - {fileID: 11400000, guid: 9b09941ad4481164aa0c9e66ede0ee71, type: 2}
-  - {fileID: 11400000, guid: 1b9d3ad0f87de734bbcf8be24819d6c3, type: 2}
+  - {fileID: 11400000, guid: 325a6c39a857f4f419ab74a494fe70a4, type: 2}
+  - {fileID: 11400000, guid: 325a6c39a857f4f419ab74a494fe70a4, type: 2}
+  - {fileID: 11400000, guid: 325a6c39a857f4f419ab74a494fe70a4, type: 2}
   - {fileID: 11400000, guid: a690629375d1fec40b87bded53e8b105, type: 2}
   lvlUp: {fileID: 696283507}
 --- !u!4 &2120545450

@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 35f;
     public float health = 100f;
     public float MaxHealth = 100f;
-    public float shield = 50f;
+    public float shield = 10f;
     public float playerDamage = 10f;
 
     [Header("Atac")]
