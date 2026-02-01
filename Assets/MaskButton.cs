@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MaskButton : MonoBehaviour
 {
-
+//ola bsoki
     [Header("Components de la UI")]
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
