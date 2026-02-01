@@ -63,31 +63,66 @@ public class levelUpHandler : MonoBehaviour
     }
 
     public void ApplyUpgrade(UpgradeData upgrade)
+{
+    // 1. APLICAR LA MILLORA
+    switch (upgrade.statToBuff)
     {
-        // 1. APLICAR LA MILLORA (El teu switch original de stats)
-        switch (upgrade.statToBuff)
-        {
-            case StatType.MaxHealth: player.MaxHealth += upgrade.amount; break;
-            case StatType.Speed: player.speed += upgrade.amount; break;
-            case StatType.AttackDamage: player.playerDamage += upgrade.amount; break;
-            case StatType.shield: player.shield += upgrade.amount; break;
-            case StatType.Cooldown: player.attackCooldown -= player.attackCooldown * upgrade.amount; break;
-            case StatType.Heal: 
-                player.health += player.MaxHealth * upgrade.amount;
-                if (player.health > player.MaxHealth) player.health = player.MaxHealth;
-                break;
-        }
+        case StatType.AttackDamage:
+            player.playerDamage += upgrade.amount;
+            // Si és permanent, sumem a l'extra per mantenir la coherència visual/lògica
+            if (upgrade.isPermanent) player.playerDamageExtra += upgrade.amount;
+            break;
 
-        if (upgrade.isPermanent)
-        {
-            PlayerPrefs.SetFloat(upgrade.statToBuff.ToString(), upgrade.amount);
-            PlayerPrefs.Save();
-        }
+        case StatType.MaxHealth:
+            player.MaxHealth += upgrade.amount;
+            player.health += upgrade.amount; // Curem el tros que hem pujat
+            if (upgrade.isPermanent) player.maxHealthExtra += upgrade.amount;
+            break;
 
-        // 2. CRIDAR AL TANCAMENT LÒGIC
-        CloseMenu();
+        case StatType.Speed:
+            player.speed += upgrade.amount;
+            break;
+
+        case StatType.Heal: 
+            player.health = Mathf.Min(player.health + (player.MaxHealth * upgrade.amount), player.MaxHealth);
+            break;
+
+        case StatType.Cooldown:
+            player.attackCooldown -= player.attackCooldown * upgrade.amount;
+            break;
+            
+        // Si encara fas servir els tipus "Mask_", posa'ls aquí també apuntant a les mateixes variables
+        case StatType.Mask_Damage:
+            player.playerDamage += upgrade.amount;
+            player.playerDamageExtra += upgrade.amount;
+            break;
+        case StatType.Mask_Speed:
+            player.SpeedExtra += upgrade.amount;
+            player.speed += upgrade.amount;
+            break;
+        case StatType.Mask_Shield:
+            player.maxShieldExtra += upgrade.amount;
+            player.shield += upgrade.amount;
+            break;
     }
 
+    // 2. GUARDAR PERMANENTMENT AL MOMENT (Si la millora és permanent)
+    if (upgrade.isPermanent)
+    {
+        // IMPORTANT: Fem servir el mateix nom de clau que després llegirà 'EquipMask'
+        // Si el teu StatType és 'AttackDamage', la clau serà "Mascara_0_AttackDamage"
+        // Si és 'Mask_Damage', serà "Mascara_0_Mask_Damage"
+        string clauUnica = "Mascara_" + player.currMask + "_" + upgrade.statToBuff.ToString();
+        
+        float valorActual = PlayerPrefs.GetFloat(clauUnica, 0f);
+        PlayerPrefs.SetFloat(clauUnica, valorActual + upgrade.amount);
+        PlayerPrefs.Save();
+        
+        Debug.Log($"Millora guardada al moment: {clauUnica} = {valorActual + upgrade.amount}");
+    }
+
+    CloseMenu();
+}
     void CloseMenu()
     {
         nivellsPendents--; // Restem un de la cua perquè ja l'hem escollit

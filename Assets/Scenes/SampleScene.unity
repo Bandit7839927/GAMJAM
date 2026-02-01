@@ -2060,7 +2060,7 @@ MonoBehaviour:
   titleText: {fileID: 918825828}
   descText: {fileID: 2126085160}
   iconImage: {fileID: 1162618428}
-  buttonBackground: {fileID: 0}
+  buttonBackgroundImage: {fileID: 381841530}
 --- !u!114 &381841529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   titleText: {fileID: 2135562808}
   descText: {fileID: 1596801388}
   iconImage: {fileID: 1288967486}
-  buttonBackground: {fileID: 0}
+  buttonBackgroundImage: {fileID: 479259120}
 --- !u!1 &484568468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3139,7 +3139,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1030.9, y: 19.5, z: -10}
+  m_LocalPosition: {x: 255, y: 19.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6645,6 +6645,8 @@ MonoBehaviour:
   playerDamage: 10
   playerDamageExtra: 0
   maxHealthExtra: 0
+  maxShieldExtra: 0
+  SpeedExtra: 0
   punt_atac: {fileID: 0}
   attackCooldown: 0.1
   attackDuration: 0.2
@@ -6667,7 +6669,7 @@ Transform:
   m_GameObject: {fileID: 926209605}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1030.9, y: 9.5, z: 0}
+  m_LocalPosition: {x: 255, y: 9.5, z: 0}
   m_LocalScale: {x: 55, y: 55, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7577,7 +7579,7 @@ Transform:
   m_GameObject: {fileID: 1002649840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1030.9, y: 19.5, z: -10}
+  m_LocalPosition: {x: 255, y: 19.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12005,7 +12007,7 @@ MonoBehaviour:
   titleText: {fileID: 367897159}
   descText: {fileID: 1282791129}
   iconImage: {fileID: 1557420687}
-  buttonBackground: {fileID: 0}
+  buttonBackgroundImage: {fileID: 1756497644}
 --- !u!1001 &1783545629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13974,6 +13976,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 325a6c39a857f4f419ab74a494fe70a4, type: 2}
   - {fileID: 11400000, guid: a690629375d1fec40b87bded53e8b105, type: 2}
   - {fileID: 11400000, guid: 1b9d3ad0f87de734bbcf8be24819d6c3, type: 2}
+  - {fileID: 11400000, guid: 5db27c28960952548b50132c023fb50b, type: 2}
   lvlUp: {fileID: 696283507}
 --- !u!4 &2120545450
 Transform:
@@ -14679,7 +14682,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2511427322544753066, guid: d9237348659e45144aefa95435659acf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1372.8
+      value: 1372.1
       objectReference: {fileID: 0}
     - target: {fileID: 2511427322544753066, guid: d9237348659e45144aefa95435659acf, type: 3}
       propertyPath: m_LocalPosition.y

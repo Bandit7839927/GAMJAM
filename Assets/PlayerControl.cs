@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour
     [Header("Millores Meta (Persistents per Màscara)")]
     public float playerDamageExtra = 0f;
     public float maxHealthExtra = 0f;
+    public float maxShieldExtra = 0f;
+    public float SpeedExtra = 0f;
 
     [Header("Atac")]
     public GameObject punt_atac;
@@ -317,20 +319,36 @@ public class PlayerControl : MonoBehaviour
 
     public void EquipMask(MaskData dades)
     {
+        // 1. Resetegem el jugador als valors "nets" abans d'aplicar la màscara
         ResetStatsBase();
         currMask = dades.idMask;
-        playerDamageExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_DanyExtra", 0);
-        maxHealthExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_VidaExtra", 0);
+
+        // 2. Carreguem les millores PERMANENTS que aquesta màscara tenia guardades al disc (PlayerPrefs)
+        // Busquem les claus úniques que hem creat abans: ex "Mascara_1_Mask_Damage"
+        playerDamageExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_Mask_Damage", 0);
+        maxHealthExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_Mask_Health", 0);
+        
+        // Si tinguéssis speed o shield permanent, els carregaries igual:
+        float speedExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_Mask_Speed", 0);
+        float shieldExtra = PlayerPrefs.GetFloat("Mascara_" + dades.idMask + "_Mask_Shield", 0);
+
+        // 3. APLICEM LA SUMA TOTAL:
+        // Stat Final = Base de la Màscara (ScriptableObject) + Millora Permanent (Meta)
         playerDamage = dades.baseDamage + playerDamageExtra;
         MaxHealth = dades.baseHealth + maxHealthExtra;
-        health = MaxHealth; 
-        speed = dades.baseSpeed;
-        shield = dades.baseShield;
+        speed = dades.baseSpeed + speedExtra;
+        shield = dades.baseShield + shieldExtra;
 
+        // Ajustem la vida actual al nou màxim
+        health = MaxHealth; 
+
+        // 4. Actualització Visual
         if (anim != null)
         {
             anim.SetFloat("animMask", currMask);
             anim.Play(anim.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0);
         }
+        
+        Debug.Log($"Equipada {dades.maskName}. Dany Total: {playerDamage} (Base: {dades.baseDamage} + Extra: {playerDamageExtra})");
     }
 }

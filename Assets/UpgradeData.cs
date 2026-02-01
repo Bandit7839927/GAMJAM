@@ -26,5 +26,9 @@ public enum StatType
     Cooldown,
     shield,
     attackSpeed,
-    Heal
+    Heal,
+    Mask_Damage,
+    Mask_Health,
+    Mask_Speed,
+    Mask_Shield
 }
