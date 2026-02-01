@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
+
+    public int currMask= 0;
+
     [Header("Stats")]
     public float speed = 35f;
     public float health = 100f;
@@ -38,6 +41,8 @@ public class PlayerControl : MonoBehaviour
     public int exp = 0;
     public int[] xp_lvl = { 3, 10, 20, 30, 40 };
     public levelUpHandler levelManager;
+
+    public MaskHandler maskManager;
     
     private Rigidbody2D rb;
     [Header("Audio")]
@@ -76,6 +81,8 @@ public class PlayerControl : MonoBehaviour
         {
             levelManager = FindObjectOfType<levelUpHandler>();
         }
+
+        maskManager.show_update_mask();
     }
 
     

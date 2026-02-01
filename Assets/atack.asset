@@ -18,4 +18,4 @@ MonoBehaviour:
   backgroundColor: {r: 1, g: 0, b: 0, a: 1}
   statToBuff: 2
   amount: 7
-  isPermanent: 0
+  isPermanent: 1

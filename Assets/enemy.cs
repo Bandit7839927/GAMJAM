@@ -125,12 +125,37 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= nextDamageTimeToPlayer)
         {
+            // Busquem el jugador
             PlayerControl pc = obj.GetComponentInParent<PlayerControl>();
+            
             if (pc != null)
-            {
+            {   
+                // --- NOVA LÒGICA D'ESCUT ---
+
+                // 1. Generem un número aleatori entre 0 i 100
+                float randomChance = Random.Range(0f, 100f);
+
+                // 2. Comparem amb l'escut del jugador
+                // Si tens 30 de shield, hi ha un 30% de possibilitats de bloquejar.
+                // (Si el número que surt és més petit que 30 -> BLOQUEJAT)
+                if (randomChance < pc.shield)
+                {
+                    Debug.Log("BLOCKED! L'escut ha parat el cop.");
+                    
+                    // L'enemic ha atacat igualment (gasta el seu torn), però no fa mal
+                    nextDamageTimeToPlayer = Time.time + damageInterval;
+                    StartPunchAnimation(); 
+                    
+                    return; // SORTIM D'AQUI: No apliquem mal
+                }
+
+                // ---------------------------
+
+                // 3. Si arribem aquí, l'escut ha fallat i rebem el mal
                 pc.TakeDamage(damage);
+                
                 nextDamageTimeToPlayer = Time.time + damageInterval;
-                StartPunchAnimation(); // Activa la animación al tocar al jugador
+                StartPunchAnimation(); 
             }
         }
     }
